@@ -92,7 +92,7 @@ beadLocate <- function(cruise, inst, save_path, k = 7, q_out = 0.25, fsc_spread 
   D2_iqr <-  rep(NA, length(all_jumps)+1)
   
   filter_table <- NULL
-  filter_plan <- data.frame(start_date = as.POSIXct(c(bd$date[1], roll_date[all_jumps])), filter_id = NA)
+  filter_plan <- filter_plan <- data.frame(start_date = to_date_str(c(bd$date[1], roll_date[all_jumps])), filter_id = NA)
   
   for (i in 1:(length(all_jumps)+1)) {
     j0 <- limits[i]
