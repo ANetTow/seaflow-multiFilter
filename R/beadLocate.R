@@ -29,7 +29,7 @@ beadLocate <- function(cruise, inst, save_path, k = 7, q_out = 0.25, fsc_spread 
   bd <- bd[(bd$fsc_small_range <= fsc_spread), ]
   
   ### rolling median:  FSC
-  roll <- zoo::rollmedian(bd$peak_fsc_small_med, k = k)
+  roll <- zoo::rollmedian(bd$fsc_small_2Q, k = k)
   roll_date <-  zoo::rollmedian(bd$date, k = k)  # is this the best way to get the rolling date value for plotting?
   
   # Changepoint analysis.
@@ -57,7 +57,7 @@ beadLocate <- function(cruise, inst, save_path, k = 7, q_out = 0.25, fsc_spread 
   ### Plotting ###
   
   g1 <- ggplot(bd) +
-    geom_point(aes(x = date, y = peak_fsc_small_med), pch = 16, color = "red", alpha = 0.25) +
+    geom_point(aes(x = date, y = fsc_small_2Q), pch = 16, color = "red", alpha = 0.25) +
     geom_vline(xintercept = roll_date[all_jumps], color = "black") +
     geom_vline(xintercept = roll_date[jumps], color = "red3", linewidth = 1) +
     theme_bw(base_size = 18) +
@@ -99,7 +99,7 @@ beadLocate <- function(cruise, inst, save_path, k = 7, q_out = 0.25, fsc_spread 
     j1 <- limits[i+1]-1
     x[i] <- roll_date[j0]
     xend[i] <- roll_date[j1]
-    y.hat[i] <- median(bd$peak_fsc_small_med[j0:j1])
+    y.hat[i] <- median(bd$fsc_small_2Q[j0:j1])
     y1.hat[i] <- median(bd$D1_2Q[j0:j1])
     y2.hat[i] <- median(bd$D2_2Q[j0:j1])
     fsc_iqr[i] <- median(bd$fsc_small_IQR[j0:j1])
